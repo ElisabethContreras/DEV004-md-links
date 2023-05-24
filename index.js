@@ -1,2 +1,10 @@
+//comandos
+import { mdLinks } from "./mdlinks.js";
+import fs from "fs";
+import path from "path";
 
-desc
+
+// 1 verificar si existe la ruta
+function detectPath (){
+    
+}
