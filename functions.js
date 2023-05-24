@@ -17,10 +17,24 @@ const existDirectory = (paths) => fs.statSync(paths).isDirectory();
 
 function allFilesDirectory(path) {
     if(existDirectory(path)) {
-        const files = fs.readdirSync(path);
+        const files = fs.readdirSync(path); //de manera sincronica, lee el contenido del directorio
         return files
         .map((file)=>{
             return allFilesDirectory(`${path}/${file}`);
         })
+        .flat();
+    }
+    else{
+        return [path];
     }
 }
+
+//Se crea una función para validar si es un archivo .md y muestre su extención como tal
+const validateMdFile = (paths) => path.extname(paths) ===".md";
+
+//expresiones regulares
+
+const linksRegex = /\[(.+?)\]\((https?:\/\/[^\s]+)(?: "(.+)")?\)|(https?:\/\/[^\s]+)/ig; // esta variable busca las coincidencias de enlaces md, 
+//con el texto visible entre [] y la URL entre (), 
+const urlRegex = /\((https?:\/\/[^\s]+)(?: "(.+)")?\)|(https?:\/\/[^\s]+)/ig; 
+const textRegex = /\[(\w+.+?)\]/gi;
