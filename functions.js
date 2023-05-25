@@ -60,8 +60,13 @@ const getLinks = (file, content)=> {
                 eachText = matchesText[0];
                 originText = eachText.replace(/\[|\]/g, '').split(',');
             }
-            
+            const matchesLinks = element.match(searchUrlRegex)
+            const eachLink = matchesLinks[0];
+            const originLink = eachLink.replace((/\(|\)/g), '' ).split(',');
+
+            arrayResponse.push({ href:originLink[0], text:originText[0], path: `${file}`})
         });
+        return arrayResponse;
     }
 
 }
