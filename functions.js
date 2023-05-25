@@ -35,11 +35,11 @@ const validateMdFile = (paths) => path.extname(paths) ===".md";
 //expresiones regulares
 
 //esta variable es para buscar y analizar los enlaces dentro de []o que no estén, pero tienen formato url
-const serchLinksRegex = /\[(.+?)\]\((https?:\/\/[^\s]+)(?: "(.+)")?\)|(https?:\/\/[^\s]+)/ig; 
+const searchLinksRegex = /\[(.+?)\]\((https?:\/\/[^\s]+)(?: "(.+)")?\)|(https?:\/\/[^\s]+)/ig; 
 //Aquí se buscan y analizan URL dentro de un texto, estén o no entre ().
-const serchUrlRegex = /\((https?:\/\/[^\s]+)(?: "(.+)")?\)|(https?:\/\/[^\s]+)/ig; 
+const searchUrlRegex = /\((https?:\/\/[^\s]+)(?: "(.+)")?\)|(https?:\/\/[^\s]+)/ig; 
 // Esta es para buscar y obtener el texto encerrado entre [], dentro de un texto.
-const serchTextRegex = /\[(\w+.+?)\]/gi;
+const searchTextRegex = /\[(\w+.+?)\]/gi;
 // el "ig" o "gi" se usa para indicar que es una busqueda globlal y que no distingue entre mayúsculas o minúsculas.
 
 
@@ -47,8 +47,21 @@ const serchTextRegex = /\[(\w+.+?)\]/gi;
 
 const getLinks = (file, content)=> {
     const arrayResult= [];
-    if(!serchLinksRegex.test(content)) {
-        
+    if(!searchLinksRegex.test(content)) {
+        console.log(chalk.bgMagenta('____ERROR: La ruta asignada no contiene links'+ `${file}`+'____'))
+        return [] //no se encontraron enlaces
+    } else{
+        const matches = content.match(searchLinksRegex)
+        matches.forEach(element => {
+            const matchesText = element.match(searchTextRegex);
+            let eachText = "";
+            let originText =['No hay texto']
+            if(matchesText){
+                eachText = matchesText[0];
+                originText = eachText.replace(/\[|\]/g, '').split(',');
+            }
+            
+        });
     }
 
 }
