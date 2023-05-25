@@ -34,7 +34,21 @@ const validateMdFile = (paths) => path.extname(paths) ===".md";
 
 //expresiones regulares
 
-const linksRegex = /\[(.+?)\]\((https?:\/\/[^\s]+)(?: "(.+)")?\)|(https?:\/\/[^\s]+)/ig; // esta variable busca las coincidencias de enlaces md, 
-//con el texto visible entre [] y la URL entre (), 
-const urlRegex = /\((https?:\/\/[^\s]+)(?: "(.+)")?\)|(https?:\/\/[^\s]+)/ig; 
-const textRegex = /\[(\w+.+?)\]/gi;
+//esta variable es para buscar y analizar los enlaces dentro de []o que no estén, pero tienen formato url
+const serchLinksRegex = /\[(.+?)\]\((https?:\/\/[^\s]+)(?: "(.+)")?\)|(https?:\/\/[^\s]+)/ig; 
+//Aquí se buscan y analizan URL dentro de un texto, estén o no entre ().
+const serchUrlRegex = /\((https?:\/\/[^\s]+)(?: "(.+)")?\)|(https?:\/\/[^\s]+)/ig; 
+// Esta es para buscar y obtener el texto encerrado entre [], dentro de un texto.
+const serchTextRegex = /\[(\w+.+?)\]/gi;
+// el "ig" o "gi" se usa para indicar que es una busqueda globlal y que no distingue entre mayúsculas o minúsculas.
+
+
+//Se crea una función para obtener los links en un documento .md
+
+const getLinks = (file, content)=> {
+    const arrayResult= [];
+    if(!serchLinksRegex.test(content)) {
+        
+    }
+
+}
