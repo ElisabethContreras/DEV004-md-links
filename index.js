@@ -1,10 +1,11 @@
-import {existPath} from './functions.js';
+import {existPath, absolutePath, convertToAbsolute} from './functions.js';
+//import { chalk } from 'chalk';
 // relativa
-const doc = 'README.md'
+//const doc = 'README.md'
 // absoluta
-// const doc = 'C:/Users/elisa/OneDrive/Escritorio/Laboratoria clases/Md Links/DEV004-md-links/README.md'
+const doc = 'C:/Users/elisa/OneDrive/Escritorio/Laboratoria clases/Md Links/DEV004-md-links/README.md'
 // no existe
-// const doc = 'yensita.md'
+//const doc = 'yensita.md'
 
 // const prueba = existPath(doc)
 // console.log(prueba);
@@ -15,3 +16,9 @@ existPath(doc).then((res)=>{
 }).catch((err)=>{
     console.error(err)
 })
+
+const absolute = absolutePath(doc);
+console.log(absolute)
+
+// const convertPathToAbsolute = convertToAbsolute(doc);
+// console.log(convertPathToAbsolute); 
