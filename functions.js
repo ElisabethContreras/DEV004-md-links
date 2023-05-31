@@ -39,7 +39,13 @@ const existMdFile = (paths) => path.extname(paths) === ".md";
 
 //Función para leer el archivo md
    function readFile(paths) {
-    
+    try{
+        const content = fs.readFileSync(paths, 'utf8');
+        return content;
+    } catch(error){
+        console.error(error);
+
+    }
    }
 
     
@@ -50,5 +56,5 @@ export {
     absolutePath,
     convertToAbsolute,
     existMdFile,
-    readFileMd
+    readFile
 };

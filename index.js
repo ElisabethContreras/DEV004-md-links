@@ -1,4 +1,4 @@
-import { existPath, absolutePath, convertToAbsolute, existMdFile, readFileMd } from './functions.js';
+import { existPath, absolutePath, convertToAbsolute, existMdFile, readFile } from './functions.js';
 import chalk from 'chalk';
 
 
@@ -39,8 +39,8 @@ if(fileMd === true){
 
 // Leer el archivo
 
-const readFile = readFileMd(doc)
-if(readFile === true){
+const readFileMd = readFile(doc)
+if(readFileMd){
     console.log(chalk.bgGreen('está leyendo el archivo'))
 }
 
