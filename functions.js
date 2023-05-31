@@ -25,10 +25,10 @@ const existPath = (paths) => {
 const absolutePath = (paths) => {
     if (path.isAbsolute(paths)) {
        return true
-       
+
     } else {
         return false
-        
+
     }
 }
 const convertToAbsolute = (paths) => path.resolve(paths);
@@ -39,16 +39,23 @@ const existMdFile = (paths) => path.extname(paths) === ".md";
 
 //Función para leer el archivo md
    function readFile(paths) {
-    try{
-        const content = fs.readFileSync(paths, 'utf8');
+    if(paths === '.md'){
+        const content = fs.readFileSync(paths,'utf8')
         return content;
-    } catch(error){
-        console.error(error);
-
     }
-   }
+    // try{
+    //     const content = fs.readFileSync(paths, 'utf8');
+    //     return content;
+    // }finally{
 
-    
+    // }
+    // } catch(error){
+    //     console.error(error);
+
+    // }
+   };
+
+
 
 
 export {
