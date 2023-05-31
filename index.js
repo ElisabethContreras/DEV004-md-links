@@ -1,24 +1,47 @@
-import {existPath, absolutePath, convertToAbsolute} from './functions.js';
-//import { chalk } from 'chalk';
+import { existPath, absolutePath, convertToAbsolute, existMdFile, readFileMd } from './functions.js';
+import chalk from 'chalk';
+
+
 // relativa
-//const doc = 'README.md'
+const doc = 'Ejemplo-1.md'
 // absoluta
-const doc = 'C:/Users/elisa/OneDrive/Escritorio/Laboratoria clases/Md Links/DEV004-md-links/README.md'
+//const doc = 'C:\Users\elisa\OneDrive\Escritorio\Laboratoria clases\Md Links\DEV004-md-links\Ejemplo-1.md'
 // no existe
 //const doc = 'yensita.md'
-
 // const prueba = existPath(doc)
 // console.log(prueba);
 // console.log( existPath(doc));
 
-existPath(doc).then((res)=>{
+
+//reconocer si existe y mandar los mensajes
+existPath(doc).then((res) => {
     console.log(res);
-}).catch((err)=>{
+}).catch((err) => {
     console.error(err)
 })
 
-const absolute = absolutePath(doc);
-console.log(absolute)
+//¿Es absoluta o relativa?
+const absolute = absolutePath(doc)
+if (absolute === true) {
+    console.log(chalk.bgGreen('ok, la ruta es absoluta'));
+} else {
+    const convertPathToAbsolute = convertToAbsolute(doc)
+    console.log(chalk.bgRed(convertPathToAbsolute + ' ' + 'La ruta se ahora es absoluta'))
+}
 
-// const convertPathToAbsolute = convertToAbsolute(doc);
-// console.log(convertPathToAbsolute); 
+//¿Existe algún archivo?
+const fileMd = existMdFile(doc)
+if(fileMd === true){
+    console.log(chalk.bgGreen('Contiene archivos .md'))
+} else{
+    console.log(chalk.bgRed('****Error: No se encontró ningún archivo .md****'));
+}
+
+// Leer el archivo
+
+const readFile = readFileMd(doc)
+if(readFile === true){
+    console.log(chalk.bgGreen('está leyendo el archivo'))
+}
+
+

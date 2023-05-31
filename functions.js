@@ -14,30 +14,41 @@ const existPath = (paths) => {
                 reject(chalk.bgRed('****La ruta buscada no existe****'))
             }
             else {
-                // console.log('ruta existe');
+                                // console.log('ruta existe');
                 // return true
                 resolve(chalk.bgGreen('ok ruta existe'))
             }
         })
     })
 }
-//función para verificar si es absoluta o no la ruta
-const absolutePath = (path) => {
-    if (path.isAbsolute) {
-        console.log(chalk.bgGreen('La ruta es absoluta'))
+//función para verificar si la ruta es absoluta o relativa
+const absolutePath = (paths) => {
+    if (path.isAbsolute(paths)) {
+       return true
+       
     } else {
-        console.log(chalk.bgRed('****La ruta encontrada es relativa****'));
+        return false
+        
     }
 }
 const convertToAbsolute = (paths) => path.resolve(paths);
-//console.log(convertToAbsolute);
 
 
-// verificar por qué lanza undifined en consola
+// reconocer si es un archivo .md
+const existMdFile = (paths) => path.extname(paths) === ".md";
+
+//Función para leer el archivo md
+   function readFile(paths) {
+    
+   }
+
+    
 
 
 export {
     existPath,
     absolutePath,
-    convertToAbsolute
+    convertToAbsolute,
+    existMdFile,
+    readFileMd
 };
