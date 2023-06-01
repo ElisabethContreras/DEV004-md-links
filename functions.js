@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import fs from 'fs';
 import path from 'path';
 
-
+//Resolver de manera ASINCRONICA!!!
 
 //función para validad si existe la ruta
 const existPath = (paths) => {
@@ -37,12 +37,13 @@ const convertToAbsolute = (paths) => path.resolve(paths);
 // reconocer si es un archivo .md
 const existMdFile = (paths) => path.extname(paths) === ".md";
 
+
 //Función para leer el archivo md
-   function readFile(paths) {
-    if(paths === '.md'){
-        const content = fs.readFileSync(paths,'utf8')
-        return content;
-    }
+//    function readFile(paths) {
+//     if(paths === '.md'){
+//         const content = fs.readFile(paths,'utf8')
+//         return content;
+//}
     // try{
     //     const content = fs.readFileSync(paths, 'utf8');
     //     return content;
@@ -53,7 +54,7 @@ const existMdFile = (paths) => path.extname(paths) === ".md";
     //     console.error(error);
 
     // }
-   };
+   //};
 
 
 
