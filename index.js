@@ -1,51 +1,64 @@
-import { existPath, absolutePath, convertToAbsolute, existMdFile, readFile } from './functions.js';
+import { existPath, absolutePath, convertToAbsolute, existMdFile, readFile, prueba } from './functions.js';
 import chalk from 'chalk';
 
 // relativa
 //const doc = 'Ejemplo-1.md'
 // absoluta
-//const doc = 'C:/Users/elisa/OneDrive/Escritorio/Laboratoria clases/Md Links/DEV004-md-links/Ejemplo-1.md'
+const doc = 'C:/Users/elisa/OneDrive/Escritorio/Laboratoria clases/Md Links/DEV004-md-links/Ejemplo-1.md'
 // no existe
-const doc = 'yensita.md'
+//const doc = 'yensita.md'
 //no es archivo .md
 //const doc = 'Ejemplo-2.js'
-// const prueba = existPath(doc)
-// console.log(prueba);
-// console.log( existPath(doc));
+//const doc = 'C:/Users/elisa/OneDrive/Escritorio/Laboratoria clases/Md Links/DEV004-md-links/Ejemplo-2.js'
 
 
 //reconocer si existe y mandar los mensajes
-
-// existPath(doc).then((res) => {
-//     console.log(res);
-// }).catch((err) => {
-//     console.error(err)
-// })
-
-//¿Es absoluta o relativa?
-const absolute = absolutePath(doc)
-if (absolute === false) {
-    const convertPathToAbsolute = convertToAbsolute(doc)
-    console.log(chalk.bgRed(convertPathToAbsolute + ' ' + 'La ruta ahora es absoluta'))
+const existAPath = existPath(doc)
+if (!existAPath === true) {
+    console.log(chalk.bgRed('***Error: la ruta no existe, intente con otra ruta***'));
+    process.exit();
    
-} else {
+}
+ 
+//mm¿Es absoluta o relativa?
+const absolute = absolutePath(doc)
+// if(absolute === true){
+//     console.log(chalk.bgCyan('la ruta es absoluta'));
+// } else{
+//     console.log(chalk.bgRed('la ruta es relativa'));
+// }
+if (absolute === false) {
+   const convertPathToAbsolute = convertToAbsolute(doc)
+  console.log(chalk.bgGreen(convertPathToAbsolute));
+    //console.log(chalk.bgRed(convertPathToAbsolute + ' ' + 'La ruta ahora es absoluta'))
+   
+ }else {
+    console.log(chalk.bgCyan('la ruta ya es absoluta, no necesita conversión'))
    
 }
 
 //¿Existe algún archivo?
 const fileMd = existMdFile(doc)
-try{
-    if(fileMd === true){
-        console.log(chalk.bgGreen('Contiene archivos .md'))
-}
-} catch(error){
-    console.error(chalk.bgRed(error));
-} 
+if(fileMd === false){
+    console.log(chalk.bgRed('***Error: No se encontraron archivos .md'));
+    process.exit();
+} //else{
+   // console.log(chalk.bgGreen('yipiii!!!, se encontraron archivos md'));
+//}
+
 
 // Leer el archivo
+readFile(doc)
+.then(data => {
+//   console.log('Contenido del archivo:', data);
+const resultprueba=  prueba(data,doc) // array3propo
+// validar(resultprueba)
 
-// const readFileMd = readFile(doc)
-// console.log(chalk.bgBlue(readFileMd));
+ console.log(prueba(data,doc),57);
 
-
-
+})
+.catch(error => {
+  console.error('Ocurrió un error al leer el archivo:', error);
+});
+//}
+//export {mdLikns}

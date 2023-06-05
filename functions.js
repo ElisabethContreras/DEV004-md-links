@@ -1,4 +1,3 @@
-import chalk from 'chalk';
 import fs from 'fs';
 import path from 'path';
 
@@ -6,21 +5,28 @@ import path from 'path';
 
 //función para validad si existe la ruta
 const existPath = (paths) => {
-    return new Promise((resolve, reject) => {
-        fs.stat(paths, (err, stats) => {
-            if (stats === undefined) {
-                // console.log('no existe, verifica');
-                // return false
-                reject(chalk.bgRed('****La ruta buscada no existe****'))
-            }
-            else {
-                                // console.log('ruta existe');
-                // return true
-                resolve(chalk.bgGreen('ok ruta existe'))
-            }
-        })
-    })
+    if(fs.existsSync(paths)){
+       return true;
+        }else{
+       return false;
+        }
 }
+// const existPath = (paths) => {
+//     return new Promise((resolve, reject) => {
+//         fs.stat(paths, (err, stats) => {
+//             if (stats === undefined) {
+//                 // console.log('no existe, verifica');
+//                 // return false
+//                 reject(chalk.bgRed('****La ruta buscada no existe****'))
+//             }
+//             else {
+//                                 // console.log('ruta existe');
+//                 // return true
+//                 resolve(chalk.bgGreen('ok ruta existe'))
+//             }
+//         })
+//     })
+// }
 //función para verificar si la ruta es absoluta o relativa
 const absolutePath = (paths) => {
     if (path.isAbsolute(paths)) {
@@ -39,30 +45,51 @@ const existMdFile = (paths) => path.extname(paths) === ".md";
 
 
 //Función para leer el archivo md
-//    function readFile(paths) {
-//     if(paths === '.md'){
-//         const content = fs.readFile(paths,'utf8')
-//         return content;
-//}
-    // try{
-    //     const content = fs.readFileSync(paths, 'utf8');
-    //     return content;
-    // }finally{
-
-    // }
-    // } catch(error){
-    //     console.error(error);
-
-    // }
-   //};
+const readFile = (paths) => {
+    return new Promise((resolve, reject) => {
+      fs.readFile(paths, 'utf8', (error, data) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(data);
+        }
+      });
+    });
+  };
+  
 
 
+const rexe = (data, doc) =>{
+    const arrayMatches = data.match(/[^!]\[.+?\]\(.+?\)/g) // extrae link y texto
+    // console.log(doc);
+    //formar objeto 3prop
+    const array3props = arrayMatches.map((elem)=>{
+        // console.log(elem.match(/https*?:([^"')\s]+)/)[0], '******');
+        // console.log(elem.match(/\[(.*)\]/)[1], '******');
+      return  {
+            text: elem.match(/\[(.*)\]/)[1], // extrae el texto del archivo, esta en la posición 1
+            href: elem.match(/https*?:([^"')\s]+)/)[0], // extrae sólo el link, esta en la posición 0
+            file: doc //
+        }
+// 
+// text
+    })
+    // console.log(array3props);
+    return array3props
+    
+}
 
+// validar(array){
+//     // recorrer el array
+//     // validar cada href (fetch, axios, http:node)
+// }
 
 export {
     existPath,
     absolutePath,
     convertToAbsolute,
     existMdFile,
-    readFile
+    readFile,
+    rexe
+
 };
