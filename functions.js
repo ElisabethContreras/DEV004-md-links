@@ -58,7 +58,6 @@ const readFile = (paths) => {
   };
   
 
-
 const rexe = (data, doc) =>{
     const arrayMatches = data.match(/[^!]\[.+?\]\(.+?\)/g) // extrae link y texto
     // console.log(doc);

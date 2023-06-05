@@ -1,14 +1,15 @@
 import { existPath, absolutePath, convertToAbsolute, existMdFile, readFile, rexe } from './functions.js';
 import chalk from 'chalk';
 
+
 // relativa
-//const doc = 'Ejemplo-1.md'
+const doc = 'Ejemplo-1.md'
 // absoluta
 //const doc = 'C:/Users/elisa/OneDrive/Escritorio/Laboratoria clases/Md Links/DEV004-md-links/Ejemplo-1.md'
 // no existe
 //const doc = 'yensita.md'
 //no es archivo .md
-const doc = 'Ejemplo-2.js'
+//const doc = 'Ejemplo-2.js'
 //const doc = 'C:/Users/elisa/OneDrive/Escritorio/Laboratoria clases/Md Links/DEV004-md-links/Ejemplo-2.js'
 
 
@@ -22,17 +23,11 @@ if (!existAPath === true) {
  
 //¿Es absoluta o relativa?
 const absolute = absolutePath(doc)
-// if(absolute === true){
-//     console.log(chalk.bgCyan('la ruta es absoluta'));
-// } else{
-//     console.log(chalk.bgRed('la ruta es relativa'));
-// }
 if (absolute === false) {
    const convertPathToAbsolute = convertToAbsolute(doc)
   console.log(chalk.bgGreen(convertPathToAbsolute));
     //console.log(chalk.bgRed(convertPathToAbsolute + ' ' + 'La ruta ahora es absoluta'))
-   
- }else {
+   }else {
     console.log(chalk.bgCyan('la ruta ya es absoluta, no necesita conversión'))
    
 }
@@ -46,7 +41,6 @@ if(fileMd === false){
    // console.log(chalk.bgGreen('yipiii!!!, se encontraron archivos md'));
 //}
 
-
 // Leer el archivo
 readFile(doc)
 .then(data => {
@@ -54,7 +48,7 @@ readFile(doc)
 const result =  rexe(data,doc) // array3propo
 // validar(rexe)
 
- console.log(result,57);
+ console.log(result);
 
 })
 .catch(error => {
