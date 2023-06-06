@@ -12,8 +12,9 @@ const doc = 'Ejemplo-1.md'
 //const doc = 'Ejemplo-2.js'
 //const doc = 'C:/Users/elisa/OneDrive/Escritorio/Laboratoria clases/Md Links/DEV004-md-links/Ejemplo-2.js'
 
-
-//reconocer si existe y mandar los mensajes
+// crear funcion mdLinks
+function mdLinks(paths, options) {
+  //reconocer si existe y mandar los mensajes
 const existAPath = existPath(doc)
 if (!existAPath === true) {
     console.log(chalk.bgRed('***Error: la ruta no existe, intente con otra ruta***'));
@@ -55,3 +56,5 @@ const result =  rexe(data,doc) // array3propo
   console.error('Ocurrió un error al leer el archivo:', error);
 });
 
+}
+mdLinks(doc, options)

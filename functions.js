@@ -63,20 +63,16 @@ const rexe = (data, doc) =>{
     // console.log(doc);
     //formar objeto 3prop
     const array3props = arrayMatches.map((elem)=>{
-        // console.log(elem.match(/https*?:([^"')\s]+)/)[0], '******');
-        // console.log(elem.match(/\[(.*)\]/)[1], '******');
-      return  {
+       
+      return  { // devuelve un objeto con 3 clases: text, href y file. todo con expresiones regulares
             text: elem.match(/\[(.*)\]/)[1], // extrae el texto del archivo, esta en la posición 1
             href: elem.match(/https*?:([^"')\s]+)/)[0], // extrae sólo el link, esta en la posición 0
-            file: doc //
+            file: doc // hacce el llamado al doc de donde se saca la información
         }
-// 
-// text
     })
-    // console.log(array3props);
-    return array3props
+       return array3props
     
-}
+};
 
 // validar(array){
 //     // recorrer el array
