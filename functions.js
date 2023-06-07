@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-
+import axios from 'axios';
 //Resolver de manera ASINCRONICA!!!
 
 //función para validad si existe la ruta
@@ -57,14 +57,12 @@ const readFile = (paths) => {
     });
   };
   
-
-const rexe = (data, doc) =>{
-    const arrayMatches = data.match(/[^!]\[.+?\]\(.+?\)/g) // extrae link y texto
-    // console.log(doc);
+//Función para extraer links y texto
+const resultRegex = (data, doc) =>{
+    const arrayMatches = data.match(/[^!]\[.+?\]\(.+?\)/g) // expresión regular para extrae link y texto
     //formar objeto 3prop
-    const array3props = arrayMatches.map((elem)=>{
-       
-      return  { // devuelve un objeto con 3 clases: text, href y file. todo con expresiones regulares
+    const array3props = arrayMatches.map((elem)=>{       
+      return  { // devuelve un objeto con 3 clases: text, href y file. 
             text: elem.match(/\[(.*)\]/)[1], // extrae el texto del archivo, esta en la posición 1
             href: elem.match(/https*?:([^"')\s]+)/)[0], // extrae sólo el link, esta en la posición 0
             file: doc // hacce el llamado al doc de donde se saca la información
@@ -74,10 +72,6 @@ const rexe = (data, doc) =>{
     
 };
 
-// validar(array){
-//     // recorrer el array
-//     // validar cada href (fetch, axios, http:node)
-// }
 
 export {
     existPath,
@@ -85,6 +79,7 @@ export {
     convertToAbsolute,
     existMdFile,
     readFile,
-    rexe
+    resultRegex,
+   
 
 };
