@@ -1,6 +1,8 @@
-import { existPath, absolutePath, convertToAbsolute, existMdFile, readFile, resultRegex,  } from './functions.js';
+import { existPath, absolutePath, convertToAbsolute, existMdFile, readFile, resultRegex, validateLinks  } from './functions.js';
 import chalk from 'chalk';
-
+// import fs from 'fs';
+// import axios from 'axios';
+// import path from 'path';
 
 
 // relativa
@@ -14,7 +16,7 @@ const doc = 'Ejemplo-1.md'
 //const doc = 'C:/Users/elisa/OneDrive/Escritorio/Laboratoria clases/Md Links/DEV004-md-links/Ejemplo-2.js'
 
 // crear funcion mdLinks
-function mdLinks(doc) {
+function mdLinks(doc, options) {
   //reconocer si existe y mandar los mensajes
 const existAPath = existPath(doc)
 if (!existAPath === true) {
@@ -45,18 +47,20 @@ if(fileMd === false){
 
 // Leer el archivo
 readFile(doc)
-.then(data => {
-//   console.log('Contenido del archivo:', data);
-const resultRegexIndex = resultRegex(data,doc) // array3propo
+  .then((data) => {
+    const resultRegexIndex = resultRegex(data, doc);
 
-
- console.log( resultRegexIndex);
-
-})
-.catch(error => {
-  console.error('Ocurrió un error al leer el archivo:', error);
-});
-
+    validateLinks(resultRegexIndex)
+      .then((resultados) => {
+        console.log(resultados);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  })
+  .catch((error) => {
+    console.error(chalk.bgRed('Ocurrió un error al leer el archivo:', error));
+  });
 
 }
-mdLinks(doc)
+mdLinks(doc, options)

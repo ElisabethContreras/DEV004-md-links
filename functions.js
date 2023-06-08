@@ -5,11 +5,11 @@ import axios from 'axios';
 
 //función para validad si existe la ruta
 const existPath = (paths) => {
-    if(fs.existsSync(paths)){
-       return true;
-        }else{
-       return false;
-        }
+  if (fs.existsSync(paths)) {
+    return true;
+  } else {
+    return false;
+  }
 }
 // const existPath = (paths) => {
 //     return new Promise((resolve, reject) => {
@@ -29,13 +29,13 @@ const existPath = (paths) => {
 // }
 //función para verificar si la ruta es absoluta o relativa
 const absolutePath = (paths) => {
-    if (path.isAbsolute(paths)) {
-       return true
+  if (path.isAbsolute(paths)) {
+    return true
 
-    } else {
-        return false
+  } else {
+    return false
 
-    }
+  }
 }
 const convertToAbsolute = (paths) => path.resolve(paths);
 
@@ -46,40 +46,53 @@ const existMdFile = (paths) => path.extname(paths) === ".md";
 
 //Función para leer el archivo md
 const readFile = (paths) => {
-    return new Promise((resolve, reject) => {
-      fs.readFile(paths, 'utf8', (error, data) => {
-        if (error) {
-          reject(error);
-        } else {
-          resolve(data);
-        }
-      });
+  return new Promise((resolve, reject) => {
+    fs.readFile(paths, 'utf8', (error, data) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(data);
+      }
     });
-  };
-  
-//Función para extraer links y texto
-const resultRegex = (data, doc) =>{
-    const arrayMatches = data.match(/[^!]\[.+?\]\(.+?\)/g) // expresión regular para extrae link y texto
-    //formar objeto 3prop
-    const array3props = arrayMatches.map((elem)=>{       
-      return  { // devuelve un objeto con 3 clases: text, href y file. 
-            text: elem.match(/\[(.*)\]/)[1], // extrae el texto del archivo, esta en la posición 1
-            href: elem.match(/https*?:([^"')\s]+)/)[0], // extrae sólo el link, esta en la posición 0
-            file: doc // hacce el llamado al doc de donde se saca la información
-        }
-    })
-       return array3props
-    
+  });
 };
 
+//Función para extraer links y texto
+const resultRegex = (data, doc) => {
+  const arrayMatches = data.match(/[^!]\[.+?\]\(.+?\)/g) // expresión regular para extrae link y texto
+  //formar objeto 3prop
+  const array3props = arrayMatches.map((elem) => {
+    return { // devuelve un objeto con 3 clases: text, href y file. 
+      text: elem.match(/\[(.*)\]/)[1], // extrae el texto del archivo, esta en la posición 1
+      href: elem.match(/https*?:([^"')\s]+)/)[0], // extrae sólo el link, esta en la posición 0
+      file: doc // hacce el llamado al doc de donde se saca la información
+    }
+  })
+  return array3props
+};
+const validateLinks = (array3props) => {
+  const validationPromises = array3props.map((enlace) => {
+    return axios.head(enlace.href)
+      .then((response) => {
+        enlace.valido = response.status >= 200 && response.status < 400;
+        return enlace;
+      })
+      .catch((error) => {
+        enlace.valido = false;
+        return enlace;
+      });
+  });
+  return Promise.all(validationPromises);
 
-export {
+};
+
+  export {
     existPath,
     absolutePath,
     convertToAbsolute,
     existMdFile,
     readFile,
     resultRegex,
-   
+    validateLinks
 
-};
+  };
