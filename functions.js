@@ -79,8 +79,8 @@ const validateLinks = (array3props) => {
         return link;
       })
       .catch((error) => {
-        //link.status = 400;
-        //link.ok = "fail";
+      //  link.status = 400;
+      //  link.ok = "fail";
         return link;
       });
   });
