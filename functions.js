@@ -71,28 +71,30 @@ const resultRegex = (data, doc) => {
   return array3props
 };
 const validateLinks = (array3props) => {
-  const validationPromises = array3props.map((enlace) => {
-    return axios.head(enlace.href)
+  const validationPromises = array3props.map((link) => {
+    return axios.head(link.href, { validate: true })
       .then((response) => {
-        enlace.valido = response.status >= 200 && response.status < 400;
-        return enlace;
+        link.status = response.status >= 200 && response.status < 400 ? 200 : 400;
+        link.ok = response.status >= 200 && response.status < 400 ? "ok" : "fail";
+        return link;
       })
       .catch((error) => {
-        enlace.valido = false;
-        return enlace;
+        //link.status = 400;
+        //link.ok = "fail";
+        return link;
       });
   });
   return Promise.all(validationPromises);
-
 };
 
-  export {
-    existPath,
-    absolutePath,
-    convertToAbsolute,
-    existMdFile,
-    readFile,
-    resultRegex,
-    validateLinks
 
-  };
+export {
+  existPath,
+  absolutePath,
+  convertToAbsolute,
+  existMdFile,
+  readFile,
+  resultRegex,
+  validateLinks
+
+};

@@ -1,4 +1,11 @@
-import { existPath, absolutePath, convertToAbsolute, existMdFile, readFile, resultRegex, validateLinks  } from './functions.js';
+import { 
+  existPath, 
+  absolutePath, 
+  convertToAbsolute, 
+  existMdFile, 
+  readFile,
+  resultRegex,
+  validateLinks } from './functions.js';
 import chalk from 'chalk';
 // import fs from 'fs';
 // import axios from 'axios';
@@ -16,7 +23,7 @@ const doc = 'Ejemplo-1.md'
 //const doc = 'C:/Users/elisa/OneDrive/Escritorio/Laboratoria clases/Md Links/DEV004-md-links/Ejemplo-2.js'
 
 // crear funcion mdLinks
-function mdLinks(doc, options) {
+function mdLinks(doc) {
   //reconocer si existe y mandar los mensajes
 const existAPath = existPath(doc)
 if (!existAPath === true) {
@@ -49,10 +56,11 @@ if(fileMd === false){
 readFile(doc)
   .then((data) => {
     const resultRegexIndex = resultRegex(data, doc);
-
+//Validar el archivo, si tiene o no links. Da un booleano como resultado
     validateLinks(resultRegexIndex)
       .then((resultados) => {
-        console.log(resultados);
+
+       console.log(resultados);
       })
       .catch((error) => {
         console.error(error);
@@ -63,4 +71,4 @@ readFile(doc)
   });
 
 }
-mdLinks(doc, options)
+mdLinks(doc)
